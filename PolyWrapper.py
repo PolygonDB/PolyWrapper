@@ -13,7 +13,7 @@ class PolyWrapper():
             {
                 'password': self.password,
                 'dbname': self.db_name,
-                'location' :key,
+                'location' : key,
                 'action' : 'retrieve'
             }
         ))
@@ -30,7 +30,7 @@ class PolyWrapper():
                 'dbname': self.db_name,
                 'location' : key,
                 'action' : 'record',
-                'value': input_value
+                'value': json.dumps(input_value)
             }
         ))
         return json.loads(self.ws.recv())
