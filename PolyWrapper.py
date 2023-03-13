@@ -6,7 +6,7 @@ class PolyWrapper():
         self.ws = create_connection(f"ws://{connection_url}/ws")
         self.password = password
         self.db_name = db_name
-    def get(self, key: str):
+    def get(self, key: str=""):
         
 
         self.ws.send(json.dumps(
