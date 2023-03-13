@@ -34,3 +34,15 @@ class PolyWrapper():
             }
         ))
         return json.loads(self.ws.recv())
+    
+    def remove(self, key: str):
+        self.ws.send(json.dumps(
+            {
+                'password': self.password,
+                'dbname': self.db_name,
+                'location' : key,
+                'action' : 'record',
+                'value': ""
+            }
+        ))
+        return json.loads(self.ws.recv())
