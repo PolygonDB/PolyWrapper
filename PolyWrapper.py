@@ -6,7 +6,7 @@ class PolyWrapper():
         self.ws = create_connection(f"ws://{connection_url}/ws")
         self.password = password
         self.db_name = db_name
-    def get(self, key: str):
+    def get(self, key: str=""):
         
 
         self.ws.send(json.dumps(
@@ -31,6 +31,18 @@ class PolyWrapper():
                 'location' : key,
                 'action' : 'record',
                 'value': json.dumps(input_value)
+            }
+        ))
+        return json.loads(self.ws.recv())
+    
+    def remove(self, key: str):
+        self.ws.send(json.dumps(
+            {
+                'password': self.password,
+                'dbname': self.db_name,
+                'location' : key,
+                'action' : 'record',
+                'value': ""
             }
         ))
         return json.loads(self.ws.recv())
