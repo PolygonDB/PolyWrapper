@@ -46,3 +46,15 @@ class PolyWrapper():
             }
         ))
         return json.loads(self.ws.recv())
+    
+    def search(self, key: str, input: str):
+        self.ws.send(json.dumps(
+            {
+                'password': 'Better_Password', 
+                'dbname': 'CatoDB',
+                'location' :key,
+                'action' : 'search',
+                'value': json.dumps(input)
+            }
+        ))
+        return json.loads(self.ws.recv())
