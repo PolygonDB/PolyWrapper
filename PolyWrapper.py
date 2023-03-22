@@ -57,6 +57,18 @@ class PolyWrapper():
             }
         ))
         return json.loads(self.ws.recv())
+    
+    def append(self, key: str, input: str):
+        self.ws.send(json.dumps(
+            {
+                'password': self.password,
+                'dbname': self.db_name,
+                'location' :key,
+                'action' : 'append',
+                'value': json.dumps(input)
+            }
+        ))
+        return json.loads(self.ws.recv())
 
 
 connection = PolyWrapper("node2.lunes.host:27023", "Better_Password", "ExampleDB")
