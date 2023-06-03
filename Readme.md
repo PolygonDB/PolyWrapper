@@ -1,5 +1,5 @@
 You can download it here https://pypi.org/project/polywrapper/
-Welcome to the PolyWrapper wiki!
+# Welcome to the PolyWrapper wiki!
 
 Here is the basics of using poly wrapper
 
@@ -22,7 +22,7 @@ connection.insert({"users": ["David", "Andrew"]})
 connection.insert("meta", {"page": "2"})
 ```
 
-To get data from certain key
+### To get data from certain key
 ```res = connection.get("key")
 print(res)
 to get all data from database do
