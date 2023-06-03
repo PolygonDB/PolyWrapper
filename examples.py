@@ -1,10 +1,11 @@
 import polywrapper
 connection = polywrapper.PolyClient("node2.lunes.host:27106", "Better_Password", "ExampleDB")
-res = connection.insert("helloz", {"suss": "yes"})
+res = connection.insert("users", ["John", "Andrew"])
+connection.append("users", "Mia")
 print(res)
 res = connection.insert("hello2", "no")
 print(res)
-res = connection.get("key")
+res = connection.get("hello2")
 print(res)
 res = connection.update("hello2", {"users": ["hi", "hi"]})
 print(res)

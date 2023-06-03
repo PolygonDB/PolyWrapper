@@ -119,3 +119,21 @@ class PolyClient:
             )
         )
         return json.loads(self.ws.recv())
+
+    def append(self, key: str, value: any):
+        if type(value) == dict:
+            input_value = json.dumps(value)
+        else:
+            input_value = value
+        self.ws.send(
+            json.dumps(
+                {
+                    "password": self.password,
+                    "dbname": self.db_name,
+                    "location": key,
+                    "action": "append",
+                    "value": input_value,
+                }
+            )
+        )
+        return json.loads(self.ws.recv())
