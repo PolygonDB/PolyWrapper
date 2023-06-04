@@ -71,6 +71,3 @@ class PolyWrapper():
         return json.loads(self.ws.recv())
 
 
-connection = PolyWrapper("node2.lunes.host:27023", "Better_Password", "ExampleDB")
-res = connection.search("company.age")
-print(res)
