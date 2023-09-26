@@ -9,7 +9,7 @@ else:
 
 setup(
     name='polywrapper',
-    version='0.1.4',
+    version='0.1.5',
     author='David',
     author_email='dwatnip123@gmail.com',
     description='A wrapper for interacting with Polygon DB',
