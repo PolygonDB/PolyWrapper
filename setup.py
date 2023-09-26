@@ -1,6 +1,9 @@
 from setuptools import setup
-with open('Readme.md', 'r', encoding='utf-8') as f:
-    long_description = f.read()
+if os.path.exists("Readme.md"):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        long_description = f.read()
+else:
+    print(f"File '{file_path}' does not exist.")
 
 setup(
     name='polywrapper',
