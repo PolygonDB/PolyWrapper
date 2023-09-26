@@ -1,4 +1,5 @@
 from setuptools import setup
+import os
 file_path = "Readme.md"
 if os.path.exists(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
