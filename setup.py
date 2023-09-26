@@ -6,6 +6,7 @@ if os.path.exists(file_path):
         long_description = f.read()
 else:
     print(f"File '{file_path}' does not exist.")
+    long_description = "https://pypi.org/project/polywrapper/"
 
 setup(
     name='polywrapper',
