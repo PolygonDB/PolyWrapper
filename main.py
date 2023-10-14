@@ -10,12 +10,12 @@ def benchmark(func, num_runs=1):
 test = Polygon("./polygondb.exe", False)
 
 def use_polygon():
-   return test.execute("""{"dbname": "database", "location": "", "action": "read", "value": 20}""")
+   return test.execute("""{"dbname": "bigdata", "location": "", "action": "read", "value": 20}""")
 
 def use_json():
   with open('databases/bigdata.json') as f:
     return json.load(f)
-   
+
 if __name__ == '__main__':
     benchmark(use_polygon, num_runs=90)
     benchmark(use_json, num_runs=90)

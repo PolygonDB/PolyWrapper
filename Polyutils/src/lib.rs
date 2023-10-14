@@ -28,6 +28,7 @@ impl Polygon {
             output = String::new();
             stdout.read_to_string(&mut output).expect("Failed to read from stdout");
         }
+        
         Ok(output)
     }
 }
