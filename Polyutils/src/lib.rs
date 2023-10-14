@@ -1,6 +1,6 @@
 use std::{process::{Stdio, Command, Child}, io::{Write, Read}};
 
-use pyo3::{prelude::*, types::PyList, PyNativeType};
+use pyo3::prelude::*;
 
 #[pyclass]
 struct Polygon {
