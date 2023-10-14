@@ -4,7 +4,7 @@ use pyo3::prelude::*;
 
 #[pyclass]
 struct Polygon {
-    exechh: Child
+    exechh: Command
 }
 
 
@@ -17,14 +17,17 @@ impl Polygon {
     }
 
     fn execute(&mut self, input: String) -> PyResult<String>{
-        if let Some(mut stdin) = self.exechh.stdin.take() {
+
+        let mut run = self.exechh.spawn().expect("Failed to start command");
+        
+        if let Some(ref mut stdin) = run.stdin.take() {
             stdin.write_all(input.as_bytes()).expect("Failed to write to stdin");
         }
     
         let mut output = String::new();
     
-        // Read data from the program's stdout
-        if let Some(mut stdout) = self.exechh.stdout.take() {
+
+        if let Some(ref mut stdout) = run.stdout.take() {
             output = String::new();
             stdout.read_to_string(&mut output).expect("Failed to read from stdout");
         }
@@ -33,7 +36,7 @@ impl Polygon {
     }
 }
 
-fn setup (t: String, d: bool) -> Child {
+fn setup (t: String, d: bool) -> Command {
     let mut cmd = Command::new(t);
     cmd.stdin(Stdio::piped());
     cmd.stdout(Stdio::piped());
@@ -43,7 +46,7 @@ fn setup (t: String, d: bool) -> Child {
         cmd.stderr(Stdio::null());
     }
 
-    return cmd.spawn().expect("Failed to start command");
+    return cmd;
 }
 
 /// A Python module implemented in Rust.

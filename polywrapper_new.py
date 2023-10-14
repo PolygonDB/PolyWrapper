@@ -9,30 +9,27 @@ class PolyLocal:
     #action is take care of
     self.dbname = None
     self.loc = None
+    self.value = None
   
   def execute(self, input:str) -> str:
      return self.polygon.execute(str(input).replace(" ", ""))
   
   def read(self) -> str:
     x = f'{{"dbname": "{self.dbname}", "location": "{self.loc}", "action": "read", "value": 20}}'
+    print(x)
     return self.execute(x)
   
-  def create(self, value) -> str:
-    x = f'{{"dbname": "{self.dbname}", "location": "{self.loc}", "action": "create", "value": {value}}}'
+  def create(self) -> str:
+    x = f'{{"dbname": "{self.dbname}", "location": "{self.loc}", "action": "create", "value": {self.value}}}'
+    print(x)
     return self.execute(x)
   
-  def modify(self, value) -> str:
-    x = f'{{"dbname": "{self.dbname}", "location": "{self.loc}", "action": "create", "value": {value}}}'
+  def update(self) -> str:
+    x = f'{{"dbname": "{self.dbname}", "location": "{self.loc}", "action": "update", "value": {self.value}}}'
+    print(x)
     return self.execute(x)
 
-  def modify(self) -> str:
-    x = f'{{"dbname": "{self.dbname}", "location": "{self.loc}", "action": "delete", "value": "0"}}'
+  def delete(self) -> str:
+    x = f'{{"dbname": "{self.dbname}", "location": "{self.loc}", "action": "delete", "value": 0}}'
     return self.execute(x)
     
-
-def benchmark(func, num_runs=1):
-    total_time = timeit.timeit(func, number=num_runs)
-    print(f"\nAverage execution time over {num_runs} runs: {total_time / num_runs:.6f} seconds")
-
-
-Poly = PolyLocal("./polygondb.exe", False)
