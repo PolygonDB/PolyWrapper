@@ -7,10 +7,10 @@ def benchmark(func, num_runs=1):
     total_time = timeit.timeit(func, number=num_runs)
     print(f"\nAverage execution time over {num_runs} runs: {total_time / num_runs:.6f} seconds")
 
-test = Polygon("./polygondb.exe")
+test = Polygon("./polygondb.exe", False)
 
 def use_polygon():
-   return test.execute("test")
+   return test.execute("""{"dbname": "database", "location": "", "action": "read", "value": 20}""")
 
 def use_json():
   with open('databases/bigdata.json') as f:

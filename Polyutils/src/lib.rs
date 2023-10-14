@@ -11,9 +11,9 @@ struct Polygon {
 #[pymethods]
 impl Polygon {
     #[new]
-    fn new(targetfile: String) -> Self {
+    fn new(targetfile: String, debug: bool) -> Self {
         
-        Polygon { exechh: setup(targetfile) }
+        Polygon { exechh: setup(targetfile, debug) }
     }
 
     fn execute(&mut self, input: String) -> PyResult<String>{
@@ -32,11 +32,16 @@ impl Polygon {
     }
 }
 
-fn setup (t: String) -> Child {
+fn setup (t: String, d: bool) -> Child {
     let mut cmd = Command::new(t);
     cmd.stdin(Stdio::piped());
     cmd.stdout(Stdio::piped());
-    cmd.stderr(Stdio::null());
+    if d { //debug mode
+        cmd.stderr(Stdio::piped());
+    } else {
+        cmd.stderr(Stdio::null());
+    }
+
     return cmd.spawn().expect("Failed to start command");
 }
 
