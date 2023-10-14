@@ -1,14 +1,8 @@
-import polywrapper
-connection = polywrapper.PolyClient("node2.lunes.host:27106", "Better_Password", "ExampleDB")
-res = connection.insert("users", ["John", "Andrew"])
-connection.append("users", "Mia")
-print(res)
-res = connection.insert("hello2", "no")
-print(res)
-res = connection.get("hello2")
-print(res)
-res = connection.update("hello2", {"users": ["hi", "hi"]})
-print(res)
-res = connection.get()
-print(res)
-connection.remove('rows')
+from polywrapper_new import *
+
+poly = PolyLocal(exec_file="./polygondb.exe", debug=False)
+
+poly.dbname = "bigdata"
+poly.loc = "/data/0/_id"
+
+print(json.loads(poly.read()))
