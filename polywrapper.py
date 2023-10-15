@@ -1,6 +1,6 @@
 from aiohttp import WebSocketError
 from websocket import create_connection
-import json
+import orjson as json
 
 
 class PolyClient:
