@@ -4,7 +4,7 @@ import json
 
 
 class PolyClient:
-    def __init__(self, connection_url: str, exec_path: str) -> None:
+    def __init__(self, connection_url: str, dbname: str = None) -> None:
         """
         Initialize a PolyWrapper instance.
 
@@ -13,13 +13,14 @@ class PolyClient:
             password (str): The password for accessing the database.
             db_name (str): The name of the database to connect to.
         """
+        self.dbname = dbname
         try:
             self.ws = create_connection(f"ws://{connection_url}/ws")
         except WebSocketError.WebSocketBadStatusException:
             raise Exception("Connection failed")
 
     
-    def read(self, dbname: str, location: str = ""):
+    def read(self, location: str = ""):
       """
       Retrieve data from the database.
 
@@ -35,7 +36,7 @@ class PolyClient:
       self.ws.send(
           json.dumps(
               {
-                  "dbname": dbname,
+                  "dbname": self.dbname,
                   "location": location,
                   "action": "read",
                   "value" : 0
@@ -44,7 +45,7 @@ class PolyClient:
       )
       return json.loads(self.ws.recv())
 
-    def create(self, dbname: str, location: str = "", value = None):
+    def create(self, location: str = "", value = None):
       """
       Creates data from the database.
 
@@ -64,7 +65,7 @@ class PolyClient:
       self.ws.send(
           json.dumps(
               {
-                  "dbname": dbname,
+                  "dbname": self.dbname,
                   "location": location,
                   "action": "create",
                   "value" : value
@@ -73,7 +74,7 @@ class PolyClient:
       )
       return json.loads(self.ws.recv())
 
-    def modify(self, dbname: str, location: str = "", value = None):
+    def modify(self, location: str = "", value = None):
       """
       Modifies data from the database.
 
@@ -93,7 +94,7 @@ class PolyClient:
       self.ws.send(
           json.dumps(
               {
-                  "dbname": dbname,
+                  "dbname": self.dbname,
                   "location": location,
                   "action": "update",
                   "value" : value
@@ -102,7 +103,7 @@ class PolyClient:
       )
       return json.loads(self.ws.recv())
 
-    def delete(self, dbname: str, location: str = ""):
+    def delete(self, location: str = ""):
       """
       Deletes data from the database.
 
@@ -118,7 +119,7 @@ class PolyClient:
       self.ws.send(
           json.dumps(
               {
-                  "dbname": dbname,
+                  "dbname": self.dbname,
                   "location": location,
                   "action": "delete",
                   "value" : 0
