@@ -95,7 +95,7 @@ class PolyClient:
               {
                   "dbname": dbname,
                   "location": location,
-                  "action": "modify",
+                  "action": "update",
                   "value" : value
               }
           )
