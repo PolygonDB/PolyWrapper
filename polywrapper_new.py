@@ -1,35 +1,43 @@
-import timeit
+from aiohttp import WebSocketError
+from websocket import create_connection
 import json
-import Polyutils
 
 
-class PolyLocal:
-  def __init__(self, exec_file: str, debug: bool) -> None:
-    self.polygon = Polyutils.Polygon(exec_file, debug)
-    #action is take care of
-    self.dbname = None
-    self.loc = None
-    self.value = None
-  
-  def execute(self, input:str) -> str:
-     return self.polygon.execute(str(input).replace(" ", ""))
-  
-  def read(self) -> str:
-    x = f'{{"dbname": "{self.dbname}", "location": "{self.loc}", "action": "read", "value": 20}}'
-    print(x)
-    return self.execute(x)
-  
-  def create(self) -> str:
-    x = f'{{"dbname": "{self.dbname}", "location": "{self.loc}", "action": "create", "value": {self.value}}}'
-    print(x)
-    return self.execute(x)
-  
-  def update(self) -> str:
-    x = f'{{"dbname": "{self.dbname}", "location": "{self.loc}", "action": "update", "value": {self.value}}}'
-    print(x)
-    return self.execute(x)
+class PolyClient:
+    def __init__(self, connection_url: str, exec_path: str) -> None:
+        """
+        Initialize a PolyWrapper instance.
 
-  def delete(self) -> str:
-    x = f'{{"dbname": "{self.dbname}", "location": "{self.loc}", "action": "delete", "value": 0}}'
-    return self.execute(x)
+        Args:
+            connection_url (str): The URL of the WebSocket connection.
+            password (str): The password for accessing the database.
+            db_name (str): The name of the database to connect to.
+        """
+        try:
+            self.ws = create_connection(f"ws://{connection_url}/ws")
+        except WebSocketError.WebSocketBadStatusException:
+            raise Exception("Connection failed")
+
     
+    def read(self, dbname: str, location: str = ""):
+      """
+      Retrieve data from the database.
+
+      Args:
+          key (str, optional): The key or location to retrieve data from.
+              Defaults to an empty string, which retrieves the entire database.
+
+      Returns:
+          dict: The retrieved data as a dictionary.
+      """
+      self.ws.send(
+          json.dumps(
+              {
+                  "dbname": dbname,
+                  "location": location,
+                  "action": "read",
+                  "value" : 0
+              }
+          )
+      )
+      return json.loads(self.ws.recv())

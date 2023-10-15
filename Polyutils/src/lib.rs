@@ -1,10 +1,10 @@
-use std::{process::{Stdio, Command, Child}, io::{Write, Read}};
+use std::{process::{Stdio, Command, Child}, io::{Write, Read}, thread};
 
 use pyo3::prelude::*;
 
 #[pyclass]
 struct Polygon {
-    exechh: Command
+    exechh: Child
 }
 
 
@@ -18,35 +18,34 @@ impl Polygon {
 
     fn execute(&mut self, input: String) -> PyResult<String>{
 
-        let mut run = self.exechh.spawn().expect("Failed to start command");
         
-        if let Some(ref mut stdin) = run.stdin.take() {
+        if let Some(ref mut stdin) = self.exechh.stdin.take() {
             stdin.write_all(input.as_bytes()).expect("Failed to write to stdin");
         }
     
         let mut output = String::new();
     
 
-        if let Some(ref mut stdout) = run.stdout.take() {
+        if let Some(ref mut stdout) = self.exechh.stdout.take() {
             output = String::new();
             stdout.read_to_string(&mut output).expect("Failed to read from stdout");
         }
         
+
         Ok(output)
     }
 }
 
-fn setup (t: String, d: bool) -> Command {
-    let mut cmd = Command::new(t);
-    cmd.stdin(Stdio::piped());
-    cmd.stdout(Stdio::piped());
-    if d { //debug mode
-        cmd.stderr(Stdio::piped());
-    } else {
-        cmd.stderr(Stdio::null());
-    }
+fn setup (t: String, d: bool) -> Child {
 
-    return cmd;
+    let child = Command::new(t)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+        .expect("Failed to start command");
+
+    return child;
 }
 
 /// A Python module implemented in Rust.

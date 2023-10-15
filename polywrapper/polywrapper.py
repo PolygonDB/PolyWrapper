@@ -1,6 +1,7 @@
 from websocket import create_connection
 import json
 import websocket
+
 class PolyClient:
     def __init__(self, connection_url: str, password: str, db_name: str) -> None:
         """

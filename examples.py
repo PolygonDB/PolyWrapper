@@ -2,14 +2,8 @@ import random
 import string
 from polywrapper_new import *
 
-poly = PolyLocal(exec_file="./polygondb.exe", debug=True)
+poly = PolyClient(connection_url="localhost:8080", exec_path="./polygondb.exe")
 
-poly.dbname = "bigdata"
-poly.loc = "/data/0/_id"
+print(poly.read(dbname="bigdata", location=""))
 
-print(json.loads(poly.read()))
-
-poly.value = 20
-print(poly.update())
-
-print(poly.read())
+poly.close()
