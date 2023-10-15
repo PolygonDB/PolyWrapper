@@ -1,6 +1,4 @@
-import random
-import string
-from polywrapper_new import *
+from polywrapper import *
 
 poly = PolyClient(connection_url="localhost:8080", dbname="bigdata")
 
