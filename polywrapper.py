@@ -19,6 +19,14 @@ class PolyClient:
         except WebSocketError.WebSocketBadStatusException:
             raise Exception("Connection failed")
 
+
+    #Old commands to new funcs
+    def append(self, location: str = "", value = None):
+       return self.create(location, value)
+    
+    def insert(self, location: str ="", value = None):
+       return self.create(location,value)
+    
     
     def read(self, location: str = ""):
       """
@@ -44,7 +52,7 @@ class PolyClient:
           )
       )
       return json.loads(self.ws.recv())
-
+    
     def create(self, location: str = "", value = None):
       """
       Creates data from the database.
