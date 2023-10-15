@@ -27,6 +27,12 @@ class PolyClient:
     def insert(self, location: str ="", value = None):
        return self.create(location,value)
     
+    def get(self, location: str=""):
+       return self.read(location)
+
+    def delete(self, location: str =""):
+       return self.delete(location)
+    
     
     def read(self, location: str = ""):
       """
